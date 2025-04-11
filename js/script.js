@@ -2,7 +2,6 @@ const apiUrl = "https://v2.jokeapi.dev/joke/Any";
 const jokeElement = document.getElementById("joke");
 const loadingElement = document.getElementById("loading");
 
-// Función para mostrar/ocultar el indicador de carga
 function toggleLoading(isLoading) {
     if (isLoading) {
         loadingElement.style.display = "block";
@@ -13,9 +12,7 @@ function toggleLoading(isLoading) {
     }
 }
 
-// Función para obtener y mostrar el chiste
 async function getJoke() {
-    // Mostrar indicador de carga
     toggleLoading(true);
     
     try {
@@ -33,15 +30,12 @@ async function getJoke() {
 
         const data = await response.json();
         
-        // Mostrar el chiste dependiendo del tipo
         jokeElement.innerHTML = data.type === "single"
             ? data.joke
             : `<strong>Pregunta:</strong> ${data.setup} <br><br> <strong>Respuesta:</strong> ${data.delivery}`;
             
-        // Ocultar indicador de carga y mostrar el chiste
         toggleLoading(false);
         
-        // Ajustar altura del contenedor según el contenido
         const jokeContainer = document.querySelector('.joke-container');
         jokeContainer.style.minHeight = `${Math.max(120, jokeElement.offsetHeight + 30)}px`;
 
@@ -52,12 +46,9 @@ async function getJoke() {
     }
 }
 
-// Iniciar la aplicación cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', function() {
-    // Cargar un chiste al iniciar
     getJoke();
     
-    // Asignar el evento al botón
     const newJokeButton = document.getElementById("new-joke-button");
     newJokeButton.addEventListener("click", getJoke);
 });
